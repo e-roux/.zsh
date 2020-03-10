@@ -86,7 +86,6 @@ export BAT_PAGER="less"
 export BAT_STYLE="grid,changes"
 export BAT_THEME=OneHalfDark
 export EDITOR=vim
-export GITHUB_TOKEN=a3bc74af0710fda23d1a6dea62213aecf75e329e
 export GOPATH=$HOME/go
 export PAGER=bat
 
