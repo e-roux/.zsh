@@ -20,7 +20,8 @@ zmodload -i zsh/complist
 bindkey '^[[Z' reverse-menu-complete
 
 # z command
-source /usr/local/share/zsh-z/zsh-z.plugin.zsh
+[ -f /usr/local/share/zsh-z/zsh-z.plugin.zsh ] && \
+  source /usr/local/share/zsh-z/zsh-z.plugin.zsh
 
 # Use modern completion system
 autoload -Uz compinit
