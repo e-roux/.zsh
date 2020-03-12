@@ -84,7 +84,7 @@ source <(helm completion zsh)
 # export WORKON_DIR=/opt/venvs
 export BAT_PAGER="less"
 export BAT_STYLE="grid,changes"
-export BAT_THEME=OneHalfDark
+export BAT_THEME='Monokai Extended'
 export EDITOR=vim
 export GOPATH=$HOME/go
 export PAGER=bat
@@ -118,7 +118,10 @@ alias fb=fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
                   rougify {} ||
                   cat {}) 2> /dev/null | head -500'
 
+alias g=git
+# From https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 alias k=kubectl
+complete -F __start_kubectl k
 
 alias -s {txt,py,conf,pl,yml,yaml}=vim
 
