@@ -92,7 +92,7 @@ export PAGER=bat
 ###############################################################################
 # ALIASES
 ###############################################################################
-alias fd=fdfind
+[ -x /usr/bin/fdfind ] && alias fd=fdfind
 
 # LS
 alias ls='ls -F --color=always --group-directories-first'
