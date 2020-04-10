@@ -1,0 +1,37 @@
+#compdef mkdocs
+# ------------------------------------------------------------------------------
+# Copyright (c) 2011 Github zsh-users - http://github.com/zsh-users
+# All rights reserved.
+#
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#  Completion script for mkdocs.
+#
+# ------------------------------------------------------------------------------
+# Authors
+# -------
+#
+#  * liangguohuan (https://github.com/liangguohuan)
+#
+# ------------------------------------------------------------------------------
+
+_mkdocs() {
+    local _cmdstr
+    _cmdstr=" \
+        '-V[Show the version and exit.]' \
+        '--version[Show the version and exit.]' \
+        '-q[Silence warnings]' \
+        '--quiet[Silence warnings]' \
+        '-v[Enable verbose output]' \
+        '--verbose[Enable verbose output]' \
+        '-h[Show this message and exit.]' \
+        '--help[Show this message and exit.]' \
+        'build[Build the MkDocs documentation]' \
+        'gh-deploy[Deploy your documentation to GitHub Pages]' \
+        'new[Create a new MkDocs project]' \
+        'serve[Run the builtin development server]' \
+    "
+    eval "_values 'command' $_cmdstr"
+}
