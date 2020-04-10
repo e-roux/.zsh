@@ -72,6 +72,13 @@ source <(kubectl completion zsh)
 source <(oc completion zsh)
 source <(helm completion zsh)
 
+# For docker-compose, see documentation
+# https://docs.docker.com/compose/completion/
+#
+# curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
+
+
+
 ###############################################################################
 # ALIASES
 ###############################################################################
