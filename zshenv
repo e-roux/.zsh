@@ -9,3 +9,4 @@ export PAGER=bat
 
 export TERM=xterm-256color
 
+export PATH=$GOPATH/bin:$PATH
