@@ -68,9 +68,9 @@ function _update_IT_books() {
 ###############################################################################
 # COMPLETION
 ###############################################################################
-source <(kubectl completion zsh)
-source <(oc completion zsh)
-source <(helm completion zsh)
+[ -x "$(which kubectl)" ] && source <(kubectl completion zsh)
+[ -x "$(which oc)" ] && source <(oc completion zsh)
+[ -x "$(which helm)" ] && source <(helm completion zsh)
 
 # For docker-compose, see documentation
 # https://docs.docker.com/compose/completion/
