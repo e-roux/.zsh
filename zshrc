@@ -110,7 +110,7 @@ alias gg=googler
 
 # From https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 alias k=kubectl
-complete -F __start_kubectl k
+[ -x "$(which kubectl)" ] && scomplete -F __start_kubectl k
 
 alias -s {txt,py,conf,pl,yml,yaml}=vim
 
