@@ -115,4 +115,5 @@ alias k=kubectl
 alias -s {txt,py,conf,pl,yml,yaml}=vim
 
 [ -f ~/.zsh/zshprivate ] && source ~/.zsh/zshprivate  
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(starship init zsh)"
