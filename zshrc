@@ -1,5 +1,8 @@
 # Set up the prompt
 
+# Use vi keybindings even if our EDITOR is set to vi
+bindkey -v
+
 autoload -Uz promptinit
 promptinit
 prompt adam1
@@ -10,9 +13,6 @@ SAVEHIST=1000
 HISTFILE=~/.zsh/.zsh_history
 
 setopt histignorealldups sharehistory
-
-# Use vi keybindings even if our EDITOR is set to vi
-bindkey -v
 
 zmodload -i zsh/complist
 # bindkey -M menuselect '^[[Z' reverse-menu-complete
@@ -116,4 +116,7 @@ alias -s {txt,py,conf,pl,yml,yaml}=vim
 
 [ -f ~/.zsh/zshprivate ] && source ~/.zsh/zshprivate  
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+for s in ~/.zsh/share/**/*(.); do source $s;done
+
+
 eval "$(starship init zsh)"
