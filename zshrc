@@ -2,10 +2,8 @@
 
 # Use vi keybindings even if our EDITOR is set to vi
 bindkey -v
-
-autoload -Uz promptinit
-promptinit
-prompt adam1
+# Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
+export KEYTIMEOUT=1
 
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
 HISTSIZE=1000
@@ -116,7 +114,7 @@ alias -s {txt,py,conf,pl,yml,yaml}=vim
 
 [ -f ~/.zsh/zshprivate ] && source ~/.zsh/zshprivate  
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-for s in ~/.zsh/share/**/*(.); do source $s;done
+source ~/.zsh/share/**/*.zsh(.)
 
-
+# https://starship.rs/
 eval "$(starship init zsh)"
