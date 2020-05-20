@@ -16,10 +16,6 @@ zmodload -i zsh/complist
 # bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey '^[[Z' reverse-menu-complete
 
-# z command
-[ -f /usr/local/share/zsh-z/zsh-z.plugin.zsh ] && \
-  source /usr/local/share/zsh-z/zsh-z.plugin.zsh
-
 # Tell zsh which function to use for completing a command
 fpath=(~/.zsh/completion $fpath)
 # Use modern completion system
@@ -43,16 +39,6 @@ zstyle ':completion:*' verbose true
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
-
-[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && \
-  source /usr/share/doc/fzf/examples/key-bindings.zsh
-
-[ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && \
-  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-[ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ] && \
-  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 function _update_IT_books() {
   _BOOKS=$HOME/Documents/Livres && [[ -d $_BOOKS ]] || mkdir -p "$_BOOKS"  && \
@@ -100,21 +86,25 @@ alias fb=fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
                   cat {}) 2> /dev/null | head -500'
                   #
 alias cat=bat
-# GIT
 alias g=git
-
-# Googler
 alias gg=googler
 
 # From https://kubernetes.io/docs/reference/kubectl/cheatsheet/
-alias k=kubectl
-[ -x "$(which kubectl)" ] && complete -F __start_kubectl k
+# alias k=kubectl
+# [ -x "$(which kubectl)" ] && complete -F __start_kubectl k
 
 alias -s {txt,py,conf,pl,yml,yaml}=vim
 
-[ -f ~/.zsh/zshprivate ] && source ~/.zsh/zshprivate  
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source ~/.zsh/share/**/*.zsh(.)
+for plugin (
+  $ZDOTDIR/opt/**/*.plugin.zsh(.)
+  $ZDOTDIR/opt/spaceship-prompt/spaceship.zsh
+  $HOME/.fzf.zsh
+  $ZDOTDIR/opt/fzf/*.zsh(.)
+  $HOME/.zsh/zshprivate
+  ); [ -f $plugin ] && source $plugin
+
+# Enable vi mode 
+type spaceship_vi_mode_enable &>/dev/null && spaceship_vi_mode_enable
 
 # https://starship.rs/
-eval "$(starship init zsh)"
+# eval "$(starship init zsh)"

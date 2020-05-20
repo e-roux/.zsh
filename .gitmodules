@@ -1,3 +1,12 @@
-[submodule "share/spaceship-prompt"]
-	path = share/spaceship-prompt
+[submodule "opt/spaceship-prompt"]
+	path = opt/spaceship-prompt
 	url = https://github.com/denysdovhan/spaceship-prompt
+[submodule "opt/zsh-autosuggestions"]
+	path = opt/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "opt/zsh-syntax-highlighting"]
+	path = opt/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "opt/zsh-z"]
+	path = opt/zsh-z
+	url = https://github.com/agkozak/zsh-z.git
