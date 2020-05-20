@@ -95,6 +95,28 @@ alias gg=googler
 
 alias -s {txt,py,conf,pl,yml,yaml}=vim
 
+# https://github.com/denysdovhan/spaceship-prompt
+export SPACESHIP_PROMPT_ORDER=(
+  time          # Time stamps section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  package       # Package version
+  node          # Node.js section
+  ruby          # Ruby section
+  golang        # Go section
+  docker        # Docker section
+  venv          # virtualenv section
+  conda         # conda virtualenv section
+  pyenv         # Pyenv section
+  kubectl       # Kubectl context section
+  exec_time     # Execution time
+  line_sep      # Line break
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  vi_mode       # Vi-mode indicator
+)
+
 for plugin (
   $ZDOTDIR/opt/**/*.plugin.zsh(.)
   $ZDOTDIR/opt/spaceship-prompt/spaceship.zsh
