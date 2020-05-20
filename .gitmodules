@@ -1,0 +1,3 @@
+[submodule "share/spaceship-prompt"]
+	path = share/spaceship-prompt
+	url = https://github.com/denysdovhan/spaceship-prompt
