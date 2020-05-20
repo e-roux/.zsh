@@ -1,3 +1,5 @@
 zshprivate
 zsh_history
 .zsh_history
+*.zwc
+.zcompdump
