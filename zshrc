@@ -1,15 +1,13 @@
-# Set up the prompt
-
-# Use vi keybindings even if our EDITOR is set to vi
+# Use vi keybindings even if EDITOR is set to vi
 bindkey -v
-# Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
-export KEYTIMEOUT=1
 
-# Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
+# Shell history and file
 HISTSIZE=1000
 SAVEHIST=1000
 HISTFILE=~/.zsh/.zsh_history
 
+# Remove command lines from the history list when the first character on the
+# # line is a space, or when one of the expanded aliases contains a leading space
 setopt histignorealldups sharehistory
 
 zmodload -i zsh/complist
@@ -21,6 +19,28 @@ fpath=(~/.zsh/completion $fpath)
 # Use modern completion system
 autoload -Uz compinit
 compinit
+
+# https://github.com/denysdovhan/spaceship-prompt
+export SPACESHIP_PROMPT_ORDER=(
+  time          # Time stamps section
+  dir           # Current directory section
+  host          # Hostname section
+  git           # Git section (git_branch + git_status)
+  package       # Package version
+  node          # Node.js section
+  ruby          # Ruby section
+  golang        # Go section
+  docker        # Docker section
+  venv          # virtualenv section
+  conda         # conda virtualenv section
+  pyenv         # Pyenv section
+  kubectl       # Kubectl context section
+  exec_time     # Execution time
+  line_sep      # Line break
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  vi_mode       # Vi-mode indicator
+)
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
@@ -40,15 +60,6 @@ zstyle ':completion:*' verbose true
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-function _update_IT_books() {
-  _BOOKS=$HOME/Documents/Livres && [[ -d $_BOOKS ]] || mkdir -p "$_BOOKS"  && \
-    find "$_BOOKS" -maxdepth 1 -type l -exec rm "{}" \; && \
-    calibredb list -s series:=Informatique  -f formats --for-machine | \
-    jq '.[] | (.formats)' | \
-    jq -r '.[]' | \
-    while read elt; do ln -nfs "$elt" "$_BOOKS"; done
-}
-
 ###############################################################################
 # COMPLETION
 ###############################################################################
@@ -60,8 +71,6 @@ function _update_IT_books() {
 # https://docs.docker.com/compose/completion/
 #
 # curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
-
-
 
 ###############################################################################
 # ALIASES
@@ -86,6 +95,7 @@ alias fb=fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
                   cat {}) 2> /dev/null | head -500'
                   #
 alias cat=bat
+alias exa='exa -hTlL 1 --git'
 alias g=git
 alias gg=googler
 
@@ -95,27 +105,15 @@ alias gg=googler
 
 alias -s {txt,py,conf,pl,yml,yaml}=vim
 
-# https://github.com/denysdovhan/spaceship-prompt
-export SPACESHIP_PROMPT_ORDER=(
-  time          # Time stamps section
-  dir           # Current directory section
-  host          # Hostname section
-  git           # Git section (git_branch + git_status)
-  package       # Package version
-  node          # Node.js section
-  ruby          # Ruby section
-  golang        # Go section
-  docker        # Docker section
-  venv          # virtualenv section
-  conda         # conda virtualenv section
-  pyenv         # Pyenv section
-  kubectl       # Kubectl context section
-  exec_time     # Execution time
-  line_sep      # Line break
-  jobs          # Background jobs indicator
-  exit_code     # Exit code section
-  vi_mode       # Vi-mode indicator
-)
+function _update_IT_books() {
+  _BOOKS=$HOME/Documents/Livres && [[ -d $_BOOKS ]] || mkdir -p "$_BOOKS"  && \
+    find "$_BOOKS" -maxdepth 1 -type l -exec rm "{}" \; && \
+    calibredb list -s series:=Informatique  -f formats --for-machine | \
+    jq '.[] | (.formats)' | \
+    jq -r '.[]' | \
+    while read elt; do ln -nfs "$elt" "$_BOOKS"; done
+}
+
 
 for plugin (
   $ZDOTDIR/opt/**/*.plugin.zsh(.)
