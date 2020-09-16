@@ -1,3 +1,4 @@
+# General {{{1
 # Use vi keybindings even if EDITOR is set to vi
 bindkey -v
 
@@ -19,6 +20,8 @@ fpath=(~/.zsh/completion $fpath)
 # Use modern completion system
 autoload -Uz compinit
 compinit
+
+###########################################################################}}}1
 
 # https://github.com/denysdovhan/spaceship-prompt
 export SPACESHIP_PROMPT_ORDER=(
@@ -42,26 +45,33 @@ export SPACESHIP_PROMPT_ORDER=(
   vi_mode       # Vi-mode indicator
 )
 
-zstyle ':completion:*' auto-description 'specify: %d'
-zstyle ':completion:*' completer _expand _complete _correct _approximate
-zstyle ':completion:*' format 'Completing %d'
-zstyle ':completion:*' group-name ''
-zstyle ':completion:*' menu select=2
-eval "$(dircolors -b)"
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-zstyle ':completion:*' menu select=long
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle ':completion:*' use-compctl false
-zstyle ':completion:*' verbose true
+# From https://grml.org/zsh/zsh-lovers.html
+# Some functions, like _apt and _dpkg, are very slow. You can use a cache in
+# order to proxy the list of results (like the list of available debian
+# packages) Use a cache:
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+
+# zstyle ':completion:*' auto-description 'specify: %d'
+# zstyle ':completion:*' completer _expand _complete _correct _approximate
+# zstyle ':completion:*' format 'Completing %d'
+# zstyle ':completion:*' group-name ''
+# zstyle ':completion:*' menu select=2
+# eval "$(dircolors -b)"
+# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+# zstyle ':completion:*' list-colors ''
+# zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
+# zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+# zstyle ':completion:*' menu select=long
+# zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
+# zstyle ':completion:*' use-compctl false
+# zstyle ':completion:*' verbose true
 
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 ###############################################################################
-# COMPLETION
+# COMPLETION {{{1
 ###############################################################################
 [ -x "$(which kubectl)" ] && source <(kubectl completion zsh)
 [ -x "$(which oc)" ] && source <(oc completion zsh)
@@ -72,8 +82,8 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 #
 # curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
 
-###############################################################################
-# ALIASES
+###########################################################################}}}1
+# ALIASES {{{1
 ###############################################################################
 [ -x /usr/bin/fdfind ] && alias fd=fdfind
 
@@ -95,7 +105,7 @@ alias fb=fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
                   cat {}) 2> /dev/null | head -500'
                   #
 alias cat=bat
-alias exa='exa -hTlL 1 --git'
+alias exa='exa -hTlL 1 --git --group-directories-first'
 alias g=git
 alias gg=googler
 
@@ -104,6 +114,7 @@ alias gg=googler
 # [ -x "$(which kubectl)" ] && complete -F __start_kubectl k
 
 alias -s {txt,py,conf,pl,yml,yaml}=vim
+############################################################################}}}1
 
 function _update_IT_books() {
   _BOOKS=$HOME/Documents/Livres && [[ -d $_BOOKS ]] || mkdir -p "$_BOOKS"  && \
@@ -129,3 +140,4 @@ type spaceship_vi_mode_enable &>/dev/null && spaceship_vi_mode_enable
 # https://starship.rs/
 # eval "$(starship init zsh)"
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
