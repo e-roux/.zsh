@@ -139,5 +139,5 @@ type spaceship_vi_mode_enable &>/dev/null && spaceship_vi_mode_enable
 
 # https://starship.rs/
 # eval "$(starship init zsh)"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
