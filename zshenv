@@ -29,7 +29,7 @@ export TERM=xterm-256color
 export KEYTIMEOUT=1
 
 export PYENV_ROOT=$HOME/.opt/pyenv
-export PATH=$HOME/.local/bin:$GOBIN:$PYENV_ROOT/shims:$PYENV_ROOT/bin:$HOME/.poetry/bin:$HOME/.cargo/bin:$PATH
+export PATH=$HOME/.local/bin:$GOBIN:$PYENV_ROOT/plugins/pyenv-virtualenv/shims:$PYENV_ROOT/shims:$PYENV_ROOT/bin:$HOME/.poetry/bin:$HOME/.cargo/bin:$PATH
 export ZDOTDIR=$HOME/.zsh
 
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
