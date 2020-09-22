@@ -10,3 +10,6 @@
 [submodule "opt/zsh-z"]
 	path = opt/zsh-z
 	url = https://github.com/agkozak/zsh-z.git
+[submodule "opt/zsh-completions"]
+	path = opt/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions
