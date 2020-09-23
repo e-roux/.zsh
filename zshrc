@@ -141,6 +141,21 @@ function _update_IT_books() {
     while read elt; do ln -nfs "$elt" "$_BOOKS"; done
 }
 
+pyenv() {
+  local command
+  command="${1:-}"
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
+
+  case "$command" in
+  activate|deactivate|rehash|shell)
+    eval "$(pyenv "sh-$command" "$@")";;
+  *)
+    command pyenv "$command" "$@";;
+  esac
+}
+
 
 for plugin (
   $ZDOTDIR/opt/**/*.plugin.zsh(.)
