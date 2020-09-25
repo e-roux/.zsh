@@ -140,8 +140,10 @@ then
 
   autoload -U promptinit; promptinit
   PURE_CMD_MAX_EXEC_TIME=10
-  # zstyle ':prompt:pure:prompt:*' color cyan
+  zstyle ':prompt:pure:prompt:*' color cyan
   zstyle :prompt:pure:git:stash show yes
-  zstyle :prompt:pure:git:dirty color 
+  zstyle :prompt:pure:git:dirty color magenta
+  zstyle ':prompt:pure:git:*' color green
+  zstyle :prompt:pure:virtualenv color yellow
   prompt pure
 fi
