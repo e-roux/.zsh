@@ -8,6 +8,10 @@ export NNN_BMS="D:~/Documents;d:~/Developpement;i:~/Images;v:~/Vidéos;m:~/Musiq
 export NNN_OPTS="a"
 export NNN_PLUG="p:preview-tui;z:autojump"
 
+export PURE_GIT_DOWN_ARROW="📥"
+export PURE_GIT_UP_ARROW="📤"
+export PURE_GIT_STASH_SYMBOL="📝"
+
 export EDITOR='vim'
 export GIT_EDITOR='vim'
 export SHELL='/bin/zsh'

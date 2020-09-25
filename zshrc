@@ -1,14 +1,12 @@
 # General {{{1
-# Use vi keybindings even if EDITOR is set to vi
-bindkey -v
+bindkey -v      # Use vi keybindings even if EDITOR is set to vi
 
-# Shell history and file
-HISTSIZE=1000
+HISTSIZE=1000   # Shell history and file
 SAVEHIST=1000
 HISTFILE=~/.zsh/.zsh_history
 
 # Remove command lines from the history list when the first character on the
-# # line is a space, or when one of the expanded aliases contains a leading space
+# line is a space, or when one of the expanded aliases contains a leading space
 setopt histignorealldups sharehistory
 
 ###########################################################################}}}1
@@ -110,6 +108,7 @@ function _update_IT_books() {
 pyenv() {
   local command
   command="${1:-}"
+  echo "$command"
   if [ "$#" -gt 0 ]; then
     shift
   fi
@@ -141,7 +140,7 @@ then
 
   autoload -U promptinit; promptinit
   PURE_CMD_MAX_EXEC_TIME=10
-  zstyle ':prompt:pure:prompt:*' color cyan
+  # zstyle ':prompt:pure:prompt:*' color cyan
   zstyle :prompt:pure:git:stash show yes
   zstyle :prompt:pure:git:dirty color 
   prompt pure
