@@ -1,6 +1,3 @@
-[submodule "opt/spaceship-prompt"]
-	path = opt/spaceship-prompt
-	url = https://github.com/denysdovhan/spaceship-prompt
 [submodule "opt/zsh-autosuggestions"]
 	path = opt/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
@@ -13,3 +10,6 @@
 [submodule "opt/zsh-completions"]
 	path = opt/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions
+[submodule "opt/pure"]
+	path = opt/pure
+	url = https://github.com/sindresorhus/pure.git
