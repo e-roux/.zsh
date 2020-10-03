@@ -12,4 +12,5 @@
 	url = https://github.com/zsh-users/zsh-completions
 [submodule "opt/pure"]
 	path = opt/pure
-	url = https://github.com/sindresorhus/pure.git
+	url = git@github.com:fesaille/pure.git
+	branch = venv
