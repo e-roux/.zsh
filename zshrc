@@ -10,9 +10,7 @@ HISTFILE=~/.zsh/.zsh_history
 setopt histignorealldups sharehistory
 
 ###########################################################################}}}1
-
-###############################################################################
-# COMPLETION {{{1
+# Completion {{{1
 ###############################################################################
 zmodload -i zsh/complist
 # bindkey -M menuselect '^[[Z' reverse-menu-complete
@@ -62,9 +60,8 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 # curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
 
 ###########################################################################}}}1
-# ALIASES {{{1
+# Aliases {{{1
 ###############################################################################
-[ -x /usr/bin/fdfind ] && alias fd=fdfind
 
 # LS
 alias ls='ls -F --color=always --group-directories-first'
@@ -82,37 +79,44 @@ alias fb=fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
                   coderay {} ||
                   rougify {} ||
                   cat {}) 2> /dev/null | head -500'
-                  #
+
 alias cat=bat
 alias exa='exa -hTlL 1 --git --group-directories-first'
+[ -x /usr/bin/fdfind ] && alias fd=fdfind
 alias g=git
+alias k=kubectl
 alias gg=googler
+alias pc=pre-commit
 
 # From https://kubernetes.io/docs/reference/kubectl/cheatsheet/
-# alias k=kubectl
 # [ -x "$(which kubectl)" ] && complete -F __start_kubectl k
 
-alias -s {txt,py,conf,pl,yml,yaml}=vim
+# alias -s {txt,py,conf,pl,yml,yaml}=vim
 ############################################################################}}}1
 
 source $ZDOTDIR/utils.zsh
 
 # pyenv specific
-pyenv() {
-  local command
-  command="${1:-}"
-  echo "$command"
-  if [ "$#" -gt 0 ]; then
-    shift
-  fi
+# pyenv() {
+#   local command
+#   command="${1:-}"
+#   echo "$command"
+#   if [ "$#" -gt 0 ]; then
+#     shift
+#   fi
 
-  case "$command" in
-  activate|deactivate|rehash|shell)
-    eval "$(pyenv "sh-$command" "$@")";;
-  *)
-    command pyenv "$command" "$@";;
-  esac
-}
+#   case "$command" in
+#   activate|deactivate|rehash|shell)
+#     eval "$(pyenv "sh-$command" "$@")";;
+#   *)
+#     command pyenv "$command" "$@";;
+#   esac
+# }
+eval "$(pyenv init zsh -)"
+
+# alternative to zshz for test
+# TODO: test zoxide
+[ -x "$(which jump)" ] && eval "$(jump shell zsh)"
 
 
 for plugin (
@@ -123,6 +127,7 @@ for plugin (
   $HOME/.zsh/zshprivate
   ); [ -f $plugin ] && source $plugin
 
+# Theme {{{1
 # If theme pure is installed, activate
 # pure seems faster than a lot of other 
 # theme providing git integration
@@ -140,3 +145,4 @@ then
   zstyle :prompt:pure:virtualenv color yellow
   prompt pure
 fi
+###########################################################################}}}1
