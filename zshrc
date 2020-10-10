@@ -87,6 +87,7 @@ alias g=git
 alias k=kubectl
 alias gg=googler
 alias pc=pre-commit
+[ -x /usr/bin/VBoxManage ] && alias vbm=VBoxManage
 
 # From https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 # [ -x "$(which kubectl)" ] && complete -F __start_kubectl k
