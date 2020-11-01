@@ -9,8 +9,8 @@
 	url = https://github.com/agkozak/zsh-z.git
 [submodule "opt/zsh-completions"]
 	path = opt/zsh-completions
-	url = https://github.com/zsh-users/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions.git
 [submodule "opt/pure"]
 	path = opt/pure
-	url = git@github.com:fesaille/pure.git
+	url = https://github.com/fesaille/pure.git
 	branch = venv
