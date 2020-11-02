@@ -14,3 +14,6 @@
 	path = opt/pure
 	url = https://github.com/fesaille/pure.git
 	branch = venv
+[submodule "opt/zsh-autoswitch-virtualenv"]
+	path = opt/zsh-autoswitch-virtualenv
+	url = https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
