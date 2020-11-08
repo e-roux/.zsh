@@ -130,10 +130,10 @@ for plugin (
 
 # Theme {{{1
 # If theme pure is installed, activate
-# pure seems faster than a lot of other 
+# pure seems faster than a lot of other
 # theme providing git integration
 # -> asynchronous calls
-if [ -d $ZDOTDIR/opt/pure ] 
+if [ -d $ZDOTDIR/opt/pure ]
 then
   fpath+=$ZDOTDIR/opt/pure
 
@@ -147,3 +147,4 @@ then
   prompt pure
 fi
 ###########################################################################}}}1
+# vim:fdm=marker
