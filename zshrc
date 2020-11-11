@@ -10,6 +10,19 @@ HISTFILE=~/.zsh/.zsh_history
 setopt histignorealldups sharehistory
 
 ###########################################################################}}}1
+# Plugins {{{1
+###############################################################################
+source $ZDOTDIR/utils.zsh
+
+for plugin (
+  $ZDOTDIR/opt/**/*.plugin.zsh(.)
+  $ZDOTDIR/opt/spaceship-prompt/spaceship.zsh
+  $HOME/.fzf.zsh
+  $ZDOTDIR/opt/fzf/*.zsh(.)
+  $HOME/.zsh/zshprivate
+  ); [ -f $plugin ] && source $plugin
+
+###########################################################################}}}1
 # Completion {{{1
 ###############################################################################
 zmodload -i zsh/complist
@@ -95,38 +108,12 @@ alias pc=pre-commit
 # alias -s {txt,py,conf,pl,yml,yaml}=vim
 ############################################################################}}}1
 
-source $ZDOTDIR/utils.zsh
 
-# pyenv specific
-# pyenv() {
-#   local command
-#   command="${1:-}"
-#   echo "$command"
-#   if [ "$#" -gt 0 ]; then
-#     shift
-#   fi
-
-#   case "$command" in
-#   activate|deactivate|rehash|shell)
-#     eval "$(pyenv "sh-$command" "$@")";;
-#   *)
-#     command pyenv "$command" "$@";;
-#   esac
-# }
-eval "$(pyenv init zsh -)"
+# eval "$(pyenv init zsh -)"
 
 # alternative to zshz for test
 # TODO: test zoxide
 [ -x "$(which jump)" ] && eval "$(jump shell zsh)"
-
-
-for plugin (
-  $ZDOTDIR/opt/**/*.plugin.zsh(.)
-  $ZDOTDIR/opt/spaceship-prompt/spaceship.zsh
-  $HOME/.fzf.zsh
-  $ZDOTDIR/opt/fzf/*.zsh(.)
-  $HOME/.zsh/zshprivate
-  ); [ -f $plugin ] && source $plugin
 
 # Theme {{{1
 # If theme pure is installed, activate
