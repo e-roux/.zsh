@@ -25,6 +25,8 @@ for plugin (
 ###########################################################################}}}1
 # Completion {{{1
 ###############################################################################
+# menu-select widget, part of the zsh/complist module
+# must be loaded before the call to compinit
 zmodload -i zsh/complist
 # bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey '^[[Z' reverse-menu-complete
@@ -72,6 +74,21 @@ zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 #
 # curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
 
+# -----------------------------------------------------------------------------
+# SSH
+# -----------------------------------------------------------------------------
+h=()
+if [[ -r ~/.ssh/config ]]; then
+  h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config)"}:#Host *}#Host }:#*[*?]*})
+fi
+# if [[ -r ~/.ssh/known_hosts ]]; then
+#   h=($h ${${${(f)"$(cat ~/.ssh/known_hosts{,2} || true)"}%%\ *}%%,*}) 2>/dev/null
+# fi
+if [[ $#h -gt 0 ]]; then
+ zstyle ':completion:*:ssh:*' hosts $h
+  zstyle ':completion:*:scp:*' hosts $h
+  zstyle ':completion:*:slogin:*' hosts $h
+fi
 ###########################################################################}}}1
 # Aliases {{{1
 ###############################################################################
