@@ -1,3 +1,8 @@
+# TODO: set those in ansible
+# [ -x "$(which kubectl)" ] && source <(kubectl completion zsh)
+# [ -x "$(which oc)" ] && source <(oc completion zsh)
+# [ -x "$(which helm)" ] && source <(helm completion zsh)
+
 # General {{{1
 bindkey -v      # Use vi keybindings even if EDITOR is set to vi
 
@@ -65,17 +70,13 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-[ -x "$(which kubectl)" ] && source <(kubectl completion zsh)
-[ -x "$(which oc)" ] && source <(oc completion zsh)
-[ -x "$(which helm)" ] && source <(helm completion zsh)
-
 # For docker-compose, see documentation
 # https://docs.docker.com/compose/completion/
 #
 # curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
 
 # -----------------------------------------------------------------------------
-# SSH
+# SSH {{{2
 # -----------------------------------------------------------------------------
 h=()
 if [[ -r ~/.ssh/config ]]; then
@@ -85,10 +86,11 @@ fi
 #   h=($h ${${${(f)"$(cat ~/.ssh/known_hosts{,2} || true)"}%%\ *}%%,*}) 2>/dev/null
 # fi
 if [[ $#h -gt 0 ]]; then
- zstyle ':completion:*:ssh:*' hosts $h
+  zstyle ':completion:*:ssh:*' hosts $h
   zstyle ':completion:*:scp:*' hosts $h
   zstyle ':completion:*:slogin:*' hosts $h
 fi
+# }}}2
 ###########################################################################}}}1
 # Aliases {{{1
 ###############################################################################
