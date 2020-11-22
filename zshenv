@@ -5,11 +5,14 @@
 # See https://github.com/sharkdp/bat#man
 #
 # Make Vi mode transitions faster (KEYTIMEOUT is in hundredths of a second)
+#
+# GHQ_ROOT is for testing of ghq
 
 export BAT_PAGER='less'
 export BAT_STYLE='changes'
 export BAT_THEME='Monokai Extended Light'
 export EDITOR='vim'
+export GHQ_ROOT=$HOME/development
 export GIT_EDITOR='vim'
 export KEYTIMEOUT=1
 export LS_COLORS=$(vivid generate solarized-light)
