@@ -26,9 +26,11 @@ export PURE_GIT_STASH_SYMBOL="📝"
 export PURE_GIT_UP_ARROW="📤"
 export PYENV_ROOT=$HOME/.opt/pyenv
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PYENV_ROOT=$HOME/.opt/pyenv
+export RBENV_ROOT=$HOME/.opt/rbenv
 export SHELL='/bin/zsh'
 export ZDOTDIR=$HOME/.zsh
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
-export PATH=$HOME/.local/bin:$GOBIN:$PYENV_ROOT/plugins/pyenv-virtualenv/shims:$PYENV_ROOT/shims:$PYENV_ROOT/bin:$HOME/.cargo/bin:$PATH
+export PATH=$HOME/.local/bin:$GOBIN:$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PYENV_ROOT/shims:$PYENV_ROOT/bin:$HOME/.cargo/bin:/opt/go/bin:$PATH

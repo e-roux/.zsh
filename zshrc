@@ -1,8 +1,5 @@
 # TODO: set those in ansible
 # TODO: oc completion broken
-# [ -x "$(which kubectl)" ] && source <(kubectl completion zsh)
-# [ -x "$(which oc)" ] && source <(oc completion zsh)
-# [ -x "$(which helm)" ] && source <(helm completion zsh)
 #
 # For docker-compose, see documentation
 # https://docs.docker.com/compose/completion/
@@ -12,6 +9,8 @@
 
 # General {{{1
 bindkey -v      # Use vi keybindings even if EDITOR is set to vi
+export KEYTIMEOUT=20
+bindkey -M viins 'jj' vi-cmd-mode ## bin 'jj' to cmd-mode
 
 HISTSIZE=1000   # Shell history and file
 SAVEHIST=1000
@@ -103,26 +102,25 @@ alias ll='ls -la'
 alias lh='ll -h'
 alias ld='ls -d */'
 alias la='ls -CA'
-alias l='ls'
 
 alias f=fzf
-alias fb=fzf --preview '[[ $(file --mime {}) =~ binary ]] &&
-                 echo {} is a binary file ||
-                 (bat --style=numbers --color=always {} ||
-                  highlight -O ansi -l {} ||
-                  coderay {} ||
-                  rougify {} ||
-                  cat {}) 2> /dev/null | head -500'
+alias fb='fzf --preview "bat --style=numbers --color=always --line-range :500 {}"'
 
-alias cat=bat
+[ -x "$(which bat)" ] && alias cat=bat
+alias d=docker
 alias exa='exa -hTlL 1 --git --group-directories-first'
-[ -x /usr/bin/fdfind ] && alias fd=fdfind
+alias l='exa'
+[ -x "$(which fdfinf)" ] && alias fd=fdfind
 alias g=git
-alias k=kubectl
 alias gg=googler
 alias pc=pre-commit
 [ -x /usr/bin/VBoxManage ] && alias vbm=VBoxManage
+alias yg=you-get
 
+[ -x "$(which kubectl)" ] && alias k=kubectl && source <(kubectl completion zsh)
+[ -x "$(which oc)" ] && source <(oc completion zsh)
+[ -x "$(which helm)" ] && source <(helm completion zsh)
+#
 # From https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 # [ -x "$(which kubectl)" ] && complete -F __start_kubectl k
 
