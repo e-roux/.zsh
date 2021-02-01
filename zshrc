@@ -22,6 +22,32 @@ HELPDIR=/usr/share/zsh/help
 # line is a space, or when one of the expanded aliases contains a leading space
 setopt histignorealldups sharehistory
 
+# Change cursor shape for different vi modes.
+# https://unix.stackexchange.com/a/496878
+function zle-keymap-select {
+    if [[ ${KEYMAP} == vicmd ]] ||
+        [[ $1 = 'block' ]]; then
+    echo -ne '\e[1 q'
+
+    elif [[ ${KEYMAP} == main ]] ||
+        [[ ${KEYMAP} == viins ]] ||
+        [[ ${KEYMAP} = '' ]] ||
+        [[ $1 = 'beam' ]]; then
+    echo -ne '\e[5 q'
+    fi
+}
+zle -N zle-keymap-select
+
+# Use beam shape cursor on startup.
+# echo -ne 'Starting zsh'
+
+    # Use beam shape cursor for each new prompt.
+_fix_cursor() {
+   echo -ne '\e[5 q'
+}
+
+precmd_functions+=(_fix_cursor)
+
 ###########################################################################}}}1
 # Plugins {{{1
 ###############################################################################
@@ -98,6 +124,9 @@ fi
 # Aliases {{{1
 ###############################################################################
 
+# Use command instead of which for checking commmand availability
+# https://stackoverflow.com/a/677212
+
 # LS
 alias ls='ls -F --color=always --group-directories-first'
 alias ll='ls -la'
@@ -108,54 +137,61 @@ alias la='ls -CA'
 alias f=fzf
 alias fb='fzf --preview "bat --style=numbers --color=always --line-range :500 {}"'
 
-[ -x "$(which bat)" ] && alias cat=bat
+command -v bat &>/dev/null 2>&1 && alias cat=bat
 alias d=docker
 alias exa='exa -hTlL 1 --git --group-directories-first'
 alias l='exa'
-[ -x "$(which fdfinf)" ] && alias fd=fdfind
+command -v fdfinf &>/dev/null 2>&1 && alias fd=fdfind
 alias g=git
 alias gg=googler
 alias help=run-help
 alias pc=pre-commit
-[ -x /usr/bin/VBoxManage ] && alias vbm=VBoxManage
+command -v VBoxManage &>/dev/null 2>&1 && alias vbm=VBoxManage
 alias yg=you-get
 
-[ -x "$(which kubectl)" ] && alias k=kubectl && source <(kubectl completion zsh)
-[ -x "$(which oc)" ] && source <(oc completion zsh)
-[ -x "$(which helm)" ] && source <(helm completion zsh)
-#
+command -v direnv &>/dev/null 2>&1 && eval "$(direnv hook zsh)"
+
+command -v kubectl &>/dev/null 2>&1 && {
+    alias k=kubectl
+    source <(kubectl completion zsh)
+}
+command -v oc &>/dev/null 2>&1 && source <(oc completion zsh)
+command -v helm &>/dev/null 2>&1 && source <(helm completion zsh)
+
+command -v register-python-argcomplete &>/dev/null 2>&1 && {
+   command -v airflow &>/dev/null 2>&1 && eval "$(register-python-argcomplete airflow)"
+}
+
 # From https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 # [ -x "$(which kubectl)" ] && complete -F __start_kubectl k
 
 # alias -s {txt,py,conf,pl,yml,yaml}=vim
-############################################################################}}}1
 
 # eval "$(pyenv init zsh -)"
 #
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-_conda=$(pyenv which conda)
-__conda_setup="$('conda' 'shell.zsh' 'hook' 2> /dev/null)"
-__conda_bin=$(pyenv which conda)
-__conda_path=$(dirname "${__conda_bin}")
-# alias conda="CONDA_EXE=$(pyenv which conda)  CONDA_CHANGEPS1=False PATH=\"$(dirname $(dirname $(pyenv which conda)))/condabin:$(dirname $(pyenv which conda)):$PATH\" $(pyenv which conda)"
-# eval "$__conda_setup"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/home/manu/.opt/pyenv/versions/miniconda3-4.7.12/etc/profile.d/conda.sh" ]; then
-#         . /home/manu/.opt/pyenv/versions/miniconda3-4.7.12/etc/profile.d/conda.sh
-#     else
-#         export PATH="/home/manu/.opt/pyenv/versions/miniconda3-4.7.12/bin:$PATH"
-#     fi
-# fi
-unset __conda_setup
-# <<< conda initialize <<<
-
+if command -v conda &> /dev/null
+then
+    _conda=$(pyenv which conda)
+    __conda_setup="$('conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    __conda_bin=$(pyenv which conda)
+    __conda_path=$(dirname "${__conda_bin}")
+    # alias conda="CONDA_EXE=$(pyenv which conda)  CONDA_CHANGEPS1=False PATH=\"$(dirname $(dirname $(pyenv which conda)))/condabin:$(dirname $(pyenv which conda)):$PATH\" $(pyenv which conda)"
+    # eval "$__conda_setup"
+    # if [ $? -eq 0 ]; then
+    #     eval "$__conda_setup"
+    # else
+    #     if [ -f "/home/manu/.opt/pyenv/versions/miniconda3-4.7.12/etc/profile.d/conda.sh" ]; then
+    #         . /home/manu/.opt/pyenv/versions/miniconda3-4.7.12/etc/profile.d/conda.sh
+    #     else
+    #         export PATH="/home/manu/.opt/pyenv/versions/miniconda3-4.7.12/bin:$PATH"
+    #     fi
+    # fi
+    unset __conda_setup
+fi
 
 # alternative to zshz for test
 # TODO: test zoxide
-[ -x "$(which jump)" ] && eval "$(jump shell zsh)"
+command -v jump &>/dev/null 2>&1 && eval "$(jump shell zsh)"
 
 # Theme {{{1
 # If theme pure is installed, activate
