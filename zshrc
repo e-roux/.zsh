@@ -16,6 +16,8 @@ HISTSIZE=1000   # Shell history and file
 SAVEHIST=1000
 HISTFILE=~/.zsh/.zsh_history
 
+HELPDIR=/usr/share/zsh/help
+
 # Remove command lines from the history list when the first character on the
 # line is a space, or when one of the expanded aliases contains a leading space
 setopt histignorealldups sharehistory
@@ -113,6 +115,7 @@ alias l='exa'
 [ -x "$(which fdfinf)" ] && alias fd=fdfind
 alias g=git
 alias gg=googler
+alias help=run-help
 alias pc=pre-commit
 [ -x /usr/bin/VBoxManage ] && alias vbm=VBoxManage
 alias yg=you-get
@@ -127,8 +130,28 @@ alias yg=you-get
 # alias -s {txt,py,conf,pl,yml,yaml}=vim
 ############################################################################}}}1
 
-
 # eval "$(pyenv init zsh -)"
+#
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+_conda=$(pyenv which conda)
+__conda_setup="$('conda' 'shell.zsh' 'hook' 2> /dev/null)"
+__conda_bin=$(pyenv which conda)
+__conda_path=$(dirname "${__conda_bin}")
+# alias conda="CONDA_EXE=$(pyenv which conda)  CONDA_CHANGEPS1=False PATH=\"$(dirname $(dirname $(pyenv which conda)))/condabin:$(dirname $(pyenv which conda)):$PATH\" $(pyenv which conda)"
+# eval "$__conda_setup"
+# if [ $? -eq 0 ]; then
+#     eval "$__conda_setup"
+# else
+#     if [ -f "/home/manu/.opt/pyenv/versions/miniconda3-4.7.12/etc/profile.d/conda.sh" ]; then
+#         . /home/manu/.opt/pyenv/versions/miniconda3-4.7.12/etc/profile.d/conda.sh
+#     else
+#         export PATH="/home/manu/.opt/pyenv/versions/miniconda3-4.7.12/bin:$PATH"
+#     fi
+# fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 
 # alternative to zshz for test
 # TODO: test zoxide

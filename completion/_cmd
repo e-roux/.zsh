@@ -1,0 +1,5 @@
+#compdef cmd
+local -a subcmds topics
+_alternative \
+  'args:Johnny :((a\:"description a" b\:"description b" c\:"description c"))' \
+  'files:filename:_files'
