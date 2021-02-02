@@ -10,7 +10,7 @@ export ZDOTDIR=$HOME/.zsh
 
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
-export PATH=$HOME/.arcade/bin:$HOME/.local/bin:$GOBIN:$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PYENV_ROOT/shims:$PYENV_ROOT/bin:$HOME/.cargo/bin:/opt/go/bin:$PATH
+export PATH=$HOME/.arkade/bin:$HOME/.local/bin:$GOBIN:$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PYENV_ROOT/shims:$PYENV_ROOT/bin:$HOME/.cargo/bin:/opt/go/bin:$PATH
 source "$HOME/.cargo/env"
 # export WORKON_DIR=/opt/venvs
 # export TERM=xterm-256color
