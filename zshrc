@@ -151,6 +151,7 @@ alias yg=you-get
 
 command -v direnv &>/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
+command -v arcade &>/dev/null 2>&1 && source <(arcade completion zsh)
 command -v kubectl &>/dev/null 2>&1 && {
     alias k=kubectl
     source <(kubectl completion zsh)
