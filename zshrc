@@ -149,6 +149,7 @@ alias pc=pre-commit
 command -v VBoxManage &>/dev/null 2>&1 && alias vbm=VBoxManage
 alias yg=you-get
 
+command -v molecule &> /dev/null 2>&1 && eval "$(_MOLECULE_COMPLETE=source molecule)"
 command -v direnv &>/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 command -v arkade &>/dev/null 2>&1 && source <(arkade completion zsh)
@@ -156,7 +157,6 @@ command -v kubectl &>/dev/null 2>&1 && {
     alias k=kubectl
     source <(kubectl completion zsh)
 }
-command -v kind &>/dev/null 2>&1 && source <(kind completion zsh)
 command -v oc &>/dev/null 2>&1 && source <(oc completion zsh)
 command -v helm &>/dev/null 2>&1 && source <(helm completion zsh)
 
