@@ -1,3 +1,5 @@
+# zmodload zsh/zprof
+
 # TODO: set those in ansible
 # TODO: oc completion broken
 #
@@ -49,6 +51,7 @@ _fix_cursor() {
 precmd_functions+=(_fix_cursor)
 
 ###########################################################################}}}1
+
 # Plugins {{{1
 ###############################################################################
 source $ZDOTDIR/utils.zsh
@@ -62,6 +65,27 @@ for plugin (
   ); [ -f $plugin ] && source $plugin
 
 ###########################################################################}}}1
+
+# Theme {{{1
+# If theme pure is installed, activate
+# pure seems faster than a lot of other
+# theme providing git integration
+# -> asynchronous calls
+if [ -d $ZDOTDIR/opt/pure ]
+then
+  fpath+=$ZDOTDIR/opt/pure
+
+  autoload -U promptinit; promptinit
+  PURE_CMD_MAX_EXEC_TIME=10
+  zstyle ':prompt:pure:prompt:*' color cyan
+  zstyle :prompt:pure:git:stash show yes
+  zstyle :prompt:pure:git:dirty color magenta
+  zstyle ':prompt:pure:git:*' color green
+  zstyle :prompt:pure:virtualenv color yellow
+  prompt pure
+fi
+###########################################################################}}}1
+
 # Completion {{{1
 ###############################################################################
 # menu-select widget, part of the zsh/complist module
@@ -74,7 +98,12 @@ bindkey '^[[Z' reverse-menu-complete
 fpath=(~/.zsh/completion $fpath)
 # Use modern completion system
 autoload -Uz compinit
-compinit
+
+if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
+  compinit;
+else
+  compinit -C;
+fi
 
 # From https://grml.org/zsh/zsh-lovers.html
 # Some functions, like _apt and _dpkg, are very slow. You can use a cache in
@@ -121,6 +150,7 @@ if [[ $#h -gt 0 ]]; then
 fi
 # }}}2
 ###########################################################################}}}1
+
 # Aliases {{{1
 ###############################################################################
 
@@ -194,24 +224,7 @@ fi
 # alternative to zshz for test
 # TODO: test zoxide
 command -v jump &>/dev/null 2>&1 && eval "$(jump shell zsh)"
-
-# Theme {{{1
-# If theme pure is installed, activate
-# pure seems faster than a lot of other
-# theme providing git integration
-# -> asynchronous calls
-if [ -d $ZDOTDIR/opt/pure ]
-then
-  fpath+=$ZDOTDIR/opt/pure
-
-  autoload -U promptinit; promptinit
-  PURE_CMD_MAX_EXEC_TIME=10
-  zstyle ':prompt:pure:prompt:*' color cyan
-  zstyle :prompt:pure:git:stash show yes
-  zstyle :prompt:pure:git:dirty color magenta
-  zstyle ':prompt:pure:git:*' color green
-  zstyle :prompt:pure:virtualenv color yellow
-  prompt pure
-fi
 ###########################################################################}}}1
+
+
 # vim:fdm=marker
