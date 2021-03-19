@@ -29,8 +29,13 @@ export EDITOR='vim'
 export GHQ_ROOT=$HOME/development
 export GIT_EDITOR='vim'
 export KEYTIMEOUT=1
-export LS_COLORS=$(vivid generate solarized-light)
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+command -v vivid &>/dev/null 2>&1 && \
+    export LS_COLORS=$(vivid generate solarized-light)
+
+command -v bat &>/dev/null 2>&1 && \
+    export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 export NNN_BMS="D:~/Documents;d:~/development;i:~/Images;v:~/Vidéos;m:~/Musique"
 export NNN_OPTS="a"
 export NNN_PLUG="d:downloader;p:preview-tui;z:autojump"
