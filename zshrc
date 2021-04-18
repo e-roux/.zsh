@@ -8,7 +8,6 @@
 #
 # curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
 
-
 # General {{{1
 bindkey -v      # Use vi keybindings even if EDITOR is set to vi
 export KEYTIMEOUT=20
@@ -54,6 +53,7 @@ precmd_functions+=(_fix_cursor)
 
 # Plugins {{{1
 ###############################################################################
+# Load translate shell alias
 source $ZDOTDIR/utils.zsh
 
 for plugin (
@@ -63,7 +63,6 @@ for plugin (
   $ZDOTDIR/opt/fzf/*.zsh(.)
   $HOME/.zsh/zshprivate
   ); [ -f $plugin ] && source $plugin
-
 ###########################################################################}}}1
 
 # Theme {{{1

@@ -13,7 +13,6 @@ export GOBIN=$GOPATH/bin
 export PATH=$HOME/.arkade/bin:$HOME/.local/bin:$GOBIN:$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PYENV_ROOT/shims:$PYENV_ROOT/bin:$HOME/.cargo/bin:/opt/go/bin:$PATH
 source "$HOME/.cargo/env"
 # export WORKON_DIR=/opt/venvs
-# export TERM=xterm-256color
 # https://golang.org/cmd/go/#hdr-Environment_variables
 # bat can be used as a colorizing pager for man
 # See https://github.com/sharkdp/bat#man
@@ -46,3 +45,7 @@ export PURE_GIT_UP_ARROW="📤"
 
 # alacritty
 export WINIT_X11_SCALE_FACTOR=1.666
+
+export AIRFLOW_HOME=$HOME/.local/share/airflow
+export AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS=False
+export AIRFLOW__CORE__LOAD_EXAMPLES=False
