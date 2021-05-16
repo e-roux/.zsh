@@ -3,6 +3,9 @@ export PYENV_ROOT=$HOME/.opt/pyenv
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PYENV_ROOT=$HOME/.opt/pyenv
 
+# Install pkg only in virtualenv
+export PIP_REQUIRE_VIRTUALENV=true
+
 export RBENV_ROOT=$HOME/.opt/rbenv
 
 export SHELL='/bin/zsh'
