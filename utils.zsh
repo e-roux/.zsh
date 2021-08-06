@@ -1,3 +1,5 @@
+#!/bin/env bash
+
 function _update_IT_books() {
   _BOOKS=$HOME/Documents/Livres && [[ -d $_BOOKS ]] || mkdir -p "$_BOOKS"  && \
     find "$_BOOKS" -maxdepth 1 -type l -exec rm "{}" \; && \
@@ -9,7 +11,7 @@ function _update_IT_books() {
 
 # source:
 # https://gist.github.com/cdown/1163649
-urlencode() {
+function urlencode() {
     # urlencode <string>
 
     old_lc_collate=$LC_COLLATE
@@ -27,10 +29,9 @@ urlencode() {
     LC_COLLATE=$old_lc_collate
 }
 
-urldecode() {
+function urldecode() {
     # urldecode <string>
 
     local url_encoded="${1//+/ }"
     printf '%b' "${url_encoded//%/\\x}"
 }
-

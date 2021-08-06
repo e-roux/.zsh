@@ -10,8 +10,12 @@
 
 # General {{{1
 bindkey -v      # Use vi keybindings even if EDITOR is set to vi
+
+# for jj and jk binding important
 export KEYTIMEOUT=20
-bindkey -M viins 'jj' vi-cmd-mode ## bin 'jj' to cmd-mode
+## bindkey jj and jk to cmd-mode
+bindkey -M viins 'jj' vi-cmd-mode
+bindkey -M viins 'jk' vi-cmd-mode
 
 HISTSIZE=1000   # Shell history and file
 SAVEHIST=1000
@@ -23,6 +27,7 @@ HELPDIR=/usr/share/zsh/help
 # line is a space, or when one of the expanded aliases contains a leading space
 setopt histignorealldups sharehistory
 
+# Cursor {{{2
 # Change cursor shape for different vi modes.
 # https://unix.stackexchange.com/a/496878
 function zle-keymap-select {
@@ -48,8 +53,9 @@ _fix_cursor() {
 }
 
 precmd_functions+=(_fix_cursor)
+# 2}}}
 
-###########################################################################}}}1
+# }}}1
 
 # Plugins {{{1
 ###############################################################################
@@ -85,10 +91,16 @@ then
 fi
 ###########################################################################}}}1
 
+# Alias definitions {{{1
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
+# 1}}}
+
 # Completion {{{1
-###############################################################################
 # menu-select widget, part of the zsh/complist module
 # must be loaded before the call to compinit
+
 zmodload -i zsh/complist
 # bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey '^[[Z' reverse-menu-complete
@@ -98,11 +110,17 @@ fpath=(~/.zsh/completion $fpath)
 # Use modern completion system
 autoload -Uz compinit
 
-if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
-  compinit;
-else
-  compinit -C;
-fi
+for dump in ~/.zcompdump(N.mh+24); do
+  compinit
+done
+
+compinit -C
+
+# if [ $(date +'%j') != $(date -r ${ZDOTDIR:-$HOME}/.zcompdump +'%j') ]; then
+#   compinit
+# else
+#   compinit -C
+# fi
 
 # From https://grml.org/zsh/zsh-lovers.html
 # Some functions, like _apt and _dpkg, are very slow. You can use a cache in
@@ -132,9 +150,9 @@ zstyle ':completion:*' verbose yes
 zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
 zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
-# -----------------------------------------------------------------------------
+
 # SSH {{{2
-# -----------------------------------------------------------------------------
+
 h=()
 if [[ -r ~/.ssh/config ]]; then
   h=($h ${${${(@M)${(f)"$(cat ~/.ssh/config)"}:#Host *}#Host }:#*[*?]*})
@@ -148,44 +166,19 @@ if [[ $#h -gt 0 ]]; then
   zstyle ':completion:*:slogin:*' hosts $h
 fi
 # }}}2
-###########################################################################}}}1
 
-# Aliases {{{1
-###############################################################################
 
 # Use command instead of which for checking commmand availability
 # https://stackoverflow.com/a/677212
 
-# LS
-alias ls='ls -F --color=always --group-directories-first'
-alias ll='ls -la'
-alias lh='ll -h'
-alias ld='ls -d */'
-alias la='ls -CA'
-
-alias f=fzf
-alias fb='fzf --preview "bat --style=numbers --color=always --line-range :500 {}"'
-
-command -v bat &>/dev/null 2>&1 && alias cat=bat
-alias d=docker
-alias exa='exa -hTlL 1 --git --group-directories-first'
-alias l='exa'
-command -v fdfinf &>/dev/null 2>&1 && alias fd=fdfind
-alias g=git
-alias gg=googler
-alias help=run-help
-alias pc=pre-commit
-command -v VBoxManage &>/dev/null 2>&1 && alias vbm=VBoxManage
-alias yg=you-get
-
-command -v molecule &> /dev/null 2>&1 && eval "$(_MOLECULE_COMPLETE=source molecule)"
+# command -v molecule &> /dev/null 2>&1 && eval "$(_MOLECULE_COMPLETE=source molecule)"
 command -v direnv &>/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
+# if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
 command -v arkade &>/dev/null 2>&1 && source <(arkade completion zsh)
-command -v kubectl &>/dev/null 2>&1 && {
-    alias k=kubectl
+command -v kubectl &>/dev/null 2>&1 && \
     source <(kubectl completion zsh)
-}
+
 command -v oc &>/dev/null 2>&1 && source <(oc completion zsh)
 command -v helm &>/dev/null 2>&1 && source <(helm completion zsh)
 
@@ -222,8 +215,9 @@ fi
 
 # alternative to zshz for test
 # TODO: test zoxide
-command -v jump &>/dev/null 2>&1 && eval "$(jump shell zsh)"
-###########################################################################}}}1
+# command -v jump &>/dev/null 2>&1 && eval "$(jump shell zsh)"
+# }}}1
 
+eval "$(zoxide init zsh)"
 
 # vim:fdm=marker
