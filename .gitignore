@@ -4,3 +4,4 @@ zsh_history
 *.zwc
 .zcompdump
 cache
+.zsh_sessions
