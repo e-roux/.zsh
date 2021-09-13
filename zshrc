@@ -55,7 +55,7 @@ zle -N zle-keymap-select
 precmd_functions+=(_fix_cursor)
 # 2}}}
 
-# }}}1
+# 1}}}
 
 # Plugins {{{1
 ###############################################################################
@@ -69,7 +69,7 @@ for plugin (
     $ZDOTDIR/opt/fzf/*.zsh(.)
     $HOME/.zsh/zshprivate
     ); [ -f $plugin ] && source $plugin
-    ###########################################################################}}}1
+# 1}}}
 
 # Theme {{{1
 # If theme pure is installed, activate
@@ -78,6 +78,7 @@ for plugin (
 # -> asynchronous calls
 if [ -d $ZDOTDIR/opt/pure ]
 then
+
     fpath+=$ZDOTDIR/opt/pure
 
     autoload -U promptinit; promptinit
@@ -89,31 +90,32 @@ then
     zstyle :prompt:pure:virtualenv color yellow
     prompt pure
 fi
-###########################################################################}}}1
+# 1}}}
 
 # Alias definitions {{{1
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f $ZDOTDIR/zsh_aliases ]; then
+    . $ZDOTDIR/zsh_aliases
 fi
 # 1}}}
 
 # Environment variables
 # BSD specific
-export CLICOLOR=1
+if [ $(uname) = Darwin ]; then
+    export CLICOLOR=1
+fi
 
-# PATH {{{1
-#======================================================================
-#
+# Environment variables {{{1
+# PATH {{{2
 
 if [ $(uname) = "Darwin" ]; then
     export HOMEBREW_NO_ANALYTICS=1
     export PATH="/opt/homebrew/bin/:$PATH"
     hash -r
 fi
+
 function _check_and_add_to_path() {
 
     path_to_be_checked=$(eval "realpath -q $1")
-
 
     if [ $? = 1 ]; then
         return
@@ -128,6 +130,7 @@ function _check_and_add_to_path() {
     esac
 }
 
+_check_and_add_to_path "$(brew --prefix)/opt/make/libexec/gnubin"
 _check_and_add_to_path $HOME/.arkade/bin
 _check_and_add_to_path $HOME/.local/bin
 _check_and_add_to_path /opt/go/bin
@@ -139,23 +142,21 @@ _check_and_add_to_path $PYENV_ROOT/bin
 _check_and_add_to_path $HOME/.cargo/bin
 
 # export PATH=$HOME/.arkade/bin:$HOME/.local/bin:$GOBIN:$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PYENV_ROOT/shims:$PYENV_ROOT/bin:$HOME/.cargo/bin:/opt/go/bin:$PATH
-# 1}}}
-#======================================================================
-# ghq {{{1
-#======================================================================
+# 2}}}
+
+# ghq {{{2
 command -v ghq &>/dev/null 2>&1 && {
     export GHQ_ROOT=$HOME/development
 }
-#======================================================================
-# vivid {{{1
-#======================================================================
+# 2}}}
+
+# vivid {{{2
 command -v vivid &>/dev/null 2>&1 && {
     export LS_COLORS=$(vivid generate solarized-light)
 }
-# 1}}}
-#======================================================================
-# bat {{{1
-#======================================================================
+# 2}}}
+
+# bat {{{2
 command -v bat &>/dev/null 2>&1 && {
     export BAT_PAGER='less'
     export BAT_STYLE='changes'
@@ -165,20 +166,21 @@ command -v bat &>/dev/null 2>&1 && {
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
     export PAGER=bat
 }
-# 1}}}
-#======================================================================
-# nnn {{{1
-#======================================================================
+# 2}}}
+
+# nnn {{{2
 export NNN_BMS="D:~/Documents;d:~/development;i:~/Images;v:~/Vidéos;m:~/Musique"
 export NNN_OPTS="a"
 export NNN_PLUG="d:downloader;p:preview-tui;z:autojump"
+# 2}}}
+
+# alacritty {{{2
+command -v alacritty &>/dev/null 2>&1 && {
+    export WINIT_X11_SCALE_FACTOR=1.666
+}
+# 2}}}
+
 # 1}}}
-#======================================================================
-# alacritty {{{1
-#======================================================================
-export WINIT_X11_SCALE_FACTOR=1.666
-# 1}}}
-#======================================================================
 
 # Completion {{{1
 # menu-select widget, part of the zsh/complist module
@@ -248,7 +250,7 @@ if [[ $#h -gt 0 ]]; then
     zstyle ':completion:*:scp:*' hosts $h
     zstyle ':completion:*:slogin:*' hosts $h
 fi
-# }}}2
+# 2}}}
 
 
 # Use command instead of which for checking commmand availability
@@ -298,7 +300,10 @@ fi
 
 # alternative to zshz for test
 # TODO: test zoxide
-# command -v jump &>/dev/null 2>&1 && eval "$(jump shell zsh)"
-# }}}1
+command -v zoxide &>/dev/null 2>&1 && eval "$(zoxide init zsh)"
 
-command -v helm &>/dev/null 2>&1 && eval "$(zoxide init zsh)" # vim:fdm=marker
+# command -v jump &>/dev/null 2>&1 && eval "$(jump shell zsh)"
+# 1}}}
+
+
+# vim: set fdm=marker:
