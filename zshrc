@@ -9,13 +9,16 @@
 # curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
 
 # General {{{1
-bindkey -v      # Use vi keybindings even if EDITOR is set to vi
+#----------------------------------------
+# Use vi keybindings
+bindkey -v
 
-# for jj and jk binding important
-export KEYTIMEOUT=20
 ## bindkey jj and jk to cmd-mode
 bindkey -M viins 'jj' vi-cmd-mode
 bindkey -M viins 'jk' vi-cmd-mode
+
+# for jj and jk binding important
+export KEYTIMEOUT=20
 
 HISTSIZE=1000   # Shell history and file
 SAVEHIST=1000
@@ -23,8 +26,8 @@ HISTFILE=~/.zsh/.zsh_history
 
 HELPDIR=/usr/share/zsh/help
 
-# Remove command lines from the history list when the first character on the
-# line is a space, or when one of the expanded aliases contains a leading space
+# Remove lines from the history list startiçng with space
+setopt histignorespace
 setopt histignorealldups sharehistory
 
 # Cursor {{{2
@@ -141,7 +144,6 @@ _check_and_add_to_path $PYENV_ROOT/shims
 _check_and_add_to_path $PYENV_ROOT/bin
 _check_and_add_to_path $HOME/.cargo/bin
 
-# export PATH=$HOME/.arkade/bin:$HOME/.local/bin:$GOBIN:$RBENV_ROOT/shims:$RBENV_ROOT/bin:$PYENV_ROOT/shims:$PYENV_ROOT/bin:$HOME/.cargo/bin:/opt/go/bin:$PATH
 # 2}}}
 
 # ghq {{{2
@@ -169,7 +171,7 @@ command -v bat &>/dev/null 2>&1 && {
 # 2}}}
 
 # nnn {{{2
-export NNN_BMS="D:~/Documents;d:~/development;i:~/Images;v:~/Vidéos;m:~/Musique"
+export NNN_BMS="D:~/Documents;d:~/development;v:~/Movies;m:~/Music;p:~/Pictures;"
 export NNN_OPTS="a"
 export NNN_PLUG="d:downloader;p:preview-tui;z:autojump"
 # 2}}}
@@ -183,15 +185,20 @@ command -v alacritty &>/dev/null 2>&1 && {
 # 1}}}
 
 # Completion {{{1
+#
 # menu-select widget, part of the zsh/complist module
 # must be loaded before the call to compinit
-
 zmodload -i zsh/complist
+
+# Test on zsh completion list color, see complist documentation
+export ZLS_COLORS="fi=33;so=10;di=35;"
+
 # bindkey -M menuselect '^[[Z' reverse-menu-complete
 bindkey '^[[Z' reverse-menu-complete
 
-# Tell zsh which function to use for completing a command
+# Add some completions functions to fpath
 fpath=(~/.zsh/completion $fpath)
+
 # Use modern completion system
 autoload -Uz compinit
 
@@ -207,10 +214,16 @@ compinit -C
 #   compinit -C
 # fi
 
+# style {{{2
+# Styles modify various operations of the completion system:
+# - formatting,
+# - what kinds of completers are used
+# - which tags are examined
+# See the `zstyle` command, in zshmodules doc
+
 # From https://grml.org/zsh/zsh-lovers.html
-# Some functions, like _apt and _dpkg, are very slow. You can use a cache in
-# order to proxy the list of results (like the list of available debian
-# packages) Use a cache:
+# Some functions, like _apt and _dpkg, are very slow. Cache is used in order to
+# proxy the list of results
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 
@@ -232,9 +245,9 @@ zstyle ':completion:*' format ' %F{yellow}-- %d --%f'
 zstyle ':completion:*' group-name ''
 zstyle ':completion:*' verbose yes
 
-zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-
+# zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
+# zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
+# 2}}}
 
 # SSH {{{2
 
@@ -260,24 +273,20 @@ fi
 command -v direnv &>/dev/null 2>&1 && eval "$(direnv hook zsh)"
 
 # if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-command -v arkade &>/dev/null 2>&1 && source <(arkade completion zsh)
-command -v kubectl &>/dev/null 2>&1 && \
-    source <(kubectl completion zsh)
 
+command -v arkade &>/dev/null 2>&1 && source <(arkade completion zsh)
+command -v kubectl &>/dev/null 2>&1 && source <(kubectl completion zsh)
 command -v oc &>/dev/null 2>&1 && source <(oc completion zsh)
 command -v helm &>/dev/null 2>&1 && source <(helm completion zsh)
 
 command -v register-python-argcomplete &>/dev/null 2>&1 && {
     command -v airflow &>/dev/null 2>&1 && eval "$(register-python-argcomplete airflow)"
 }
-
-# From https://kubernetes.io/docs/reference/kubectl/cheatsheet/
-# [ -x "$(which kubectl)" ] && complete -F __start_kubectl k
-
 # alias -s {txt,py,conf,pl,yml,yaml}=vim
 
 # eval "$(pyenv init zsh -)"
 #
+
 if command -v conda &> /dev/null
 then
     _conda=$(pyenv which conda)
@@ -298,11 +307,6 @@ then
     unset __conda_setup
 fi
 
-# alternative to zshz for test
-# TODO: test zoxide
-command -v zoxide &>/dev/null 2>&1 && eval "$(zoxide init zsh)"
-
-# command -v jump &>/dev/null 2>&1 && eval "$(jump shell zsh)"
 # 1}}}
 
 
