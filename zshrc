@@ -133,7 +133,8 @@ function _check_and_add_to_path() {
     esac
 }
 
-_check_and_add_to_path "$(brew --prefix)/opt/make/libexec/gnubin"
+command -v brew &>/dev/null 2>&1 && \
+		_check_and_add_to_path "$(brew --prefix)/opt/make/libexec/gnubin"
 _check_and_add_to_path $HOME/.arkade/bin
 _check_and_add_to_path $HOME/.local/bin
 _check_and_add_to_path /opt/go/bin
