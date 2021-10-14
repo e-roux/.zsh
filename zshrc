@@ -187,6 +187,7 @@ command -v alacritty &>/dev/null 2>&1 && {
 
 # Completion {{{1
 #
+
 # menu-select widget, part of the zsh/complist module
 # must be loaded before the call to compinit
 zmodload -i zsh/complist
@@ -199,6 +200,9 @@ bindkey '^[[Z' reverse-menu-complete
 
 # Add some completions functions to fpath
 fpath=(~/.zsh/completion $fpath)
+
+command -v brew &>/dev/null 2>&1 && \
+    fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 
 # Use modern completion system
 autoload -Uz compinit
