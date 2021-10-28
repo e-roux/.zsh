@@ -163,7 +163,7 @@ command -v vivid &>/dev/null 2>&1 && {
 command -v bat &>/dev/null 2>&1 && {
     export BAT_PAGER='less'
     export BAT_STYLE='changes'
-    export BAT_THEME='Monokai Extended Light'
+    export BAT_THEME='Solarized (light)'
     # bat can be used as a colorizing pager for man
     # See https://github.com/sharkdp/bat#man
     export MANPAGER="sh -c 'col -bx | bat -l man -p'"
