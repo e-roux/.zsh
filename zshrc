@@ -30,6 +30,12 @@ HELPDIR=/usr/share/zsh/help
 setopt histignorespace
 setopt histignorealldups sharehistory
 
+# Enable Ctrl-x-e to edit command line
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd ^e edit-command-line
+
+
 # Cursor {{{2
 # Change cursor shape for different vi modes.
 # https://unix.stackexchange.com/a/496878
