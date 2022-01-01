@@ -118,7 +118,7 @@ fi
 
 if [ $(uname) = "Darwin" ]; then
     export HOMEBREW_NO_ANALYTICS=1
-    export PATH="/opt/homebrew/bin/:$PATH"
+    export PATH="/opt/homebrew/sbin/:/opt/homebrew/bin/:$PATH"
     hash -r
 fi
 
