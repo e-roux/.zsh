@@ -2,4 +2,6 @@
 local -a subcmds topics
 _alternative \
   'args:Johnny :((a\:"description a" b\:"description b" c\:"description c"))' \
-  'files:filename:_files'
+  "dirs:user directory:($userdirs)" \
+  "pids:process ID:($(ps -A o pid=))" \
+  'files:filename:_files -/'
