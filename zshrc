@@ -78,7 +78,7 @@ for plugin (
     $ZDOTDIR/opt/fzf/*.zsh(.)
     $HOME/.zsh/zshprivate
     ); [ -f $plugin ] && source $plugin
-# 1}}}
+    # 1}}}
 
 # Theme {{{1
 # If theme pure is installed, activate
@@ -118,7 +118,7 @@ fi
 
 if [ $(uname) = "Darwin" ]; then
     export HOMEBREW_NO_ANALYTICS=1
-    export PATH="/opt/homebrew/sbin/:/opt/homebrew/bin/:$PATH"
+    export PATH="/opt/homebrew/sbin:/opt/homebrew/bin:$PATH"
     hash -r
 fi
 
@@ -140,16 +140,15 @@ function _check_and_add_to_path() {
 }
 
 command -v brew &>/dev/null 2>&1 && \
-		_check_and_add_to_path "$(brew --prefix)/opt/make/libexec/gnubin"
-_check_and_add_to_path $HOME/.arkade/bin
-_check_and_add_to_path $HOME/.local/bin
-_check_and_add_to_path /opt/go/bin
-_check_and_add_to_path $GOBIN
-_check_and_add_to_path $RBENV_ROOT/shims
-_check_and_add_to_path $RBENV_ROOT/bin
-_check_and_add_to_path $PYENV_ROOT/shims
-_check_and_add_to_path $PYENV_ROOT/bin
-_check_and_add_to_path $HOME/.cargo/bin
+    _check_and_add_to_path "$(brew --prefix)/opt/make/libexec/gnubin"
+    _check_and_add_to_path $HOME/.local/bin
+    _check_and_add_to_path /opt/go/bin
+    _check_and_add_to_path $GOBIN
+    _check_and_add_to_path $RBENV_ROOT/shims
+    _check_and_add_to_path $RBENV_ROOT/bin
+    _check_and_add_to_path $PYENV_ROOT/shims
+    _check_and_add_to_path $PYENV_ROOT/bin
+    _check_and_add_to_path $HOME/.cargo/bin
 
 # 2}}}
 
@@ -189,6 +188,31 @@ command -v alacritty &>/dev/null 2>&1 && {
 }
 # 2}}}
 
+# 1}}}
+
+# conda {{{1
+#******************************************************************************
+# Source conda configuration
+# Base environment automatically activated with auto_activate_base
+# https://docs.conda.io/projects/conda/en/latest/configuration.html
+#******************************************************************************
+function _register_conda {
+
+    BREW_PREFIX=$(brew --prefix)
+    __conda_setup="$('${BREW_PREFIX}/Caskroom/miniconda/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
+    else
+        if [ -f "${BREW_PREFIX}/Caskroom/miniconda/base/etc/profile.d/conda.sh" ]; then
+            . "${BREW_PREFIX}/Caskroom/miniconda/base/etc/profile.d/conda.sh"
+        else
+            export PATH="${BREW_PREFIX}/Caskroom/miniconda/base/bin:$PATH"
+        fi
+    fi
+    unset __conda_setup
+}
+
+command -v brew &>/dev/null 2>&1 && _register_conda
 # 1}}}
 
 # Completion {{{1
@@ -293,32 +317,8 @@ command -v helm &>/dev/null 2>&1 && source <(helm completion zsh)
 command -v register-python-argcomplete &>/dev/null 2>&1 && {
     command -v airflow &>/dev/null 2>&1 && eval "$(register-python-argcomplete airflow)"
 }
+
 # alias -s {txt,py,conf,pl,yml,yaml}=vim
 
-# eval "$(pyenv init zsh -)"
-#
-
-if command -v conda &> /dev/null
-then
-    _conda=$(pyenv which conda)
-    __conda_setup="$('conda' 'shell.zsh' 'hook' 2> /dev/null)"
-    __conda_bin=$(pyenv which conda)
-    __conda_path=$(dirname "${__conda_bin}")
-    # alias conda="CONDA_EXE=$(pyenv which conda)  CONDA_CHANGEPS1=False PATH=\"$(dirname $(dirname $(pyenv which conda)))/condabin:$(dirname $(pyenv which conda)):$PATH\" $(pyenv which conda)"
-    # eval "$__conda_setup"
-    # if [ $? -eq 0 ]; then
-    #     eval "$__conda_setup"
-    # else
-    #     if [ -f "/home/manu/.opt/pyenv/versions/miniconda3-4.7.12/etc/profile.d/conda.sh" ]; then
-    #         . /home/manu/.opt/pyenv/versions/miniconda3-4.7.12/etc/profile.d/conda.sh
-    #     else
-    #         export PATH="/home/manu/.opt/pyenv/versions/miniconda3-4.7.12/bin:$PATH"
-    #     fi
-    # fi
-    unset __conda_setup
-fi
-
 # 1}}}
-
-
 # vim: set fdm=marker:
