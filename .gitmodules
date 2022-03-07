@@ -12,11 +12,8 @@
 	url = https://github.com/zsh-users/zsh-completions.git
 [submodule "opt/pure"]
 	path = opt/pure
-	url = https://github.com/fesaille/pure.git
+	url = https://github.com/sindresorhus/pure.git
 	branch = venv
 [submodule "opt/zsh-autoswitch-virtualenv"]
 	path = opt/zsh-autoswitch-virtualenv
 	url = https://github.com/MichaelAquilina/zsh-autoswitch-virtualenv
-[submodule "translate"]
-	path = opt/translate-shell
-	url = https://github.com/soimort/translate-shell.git
