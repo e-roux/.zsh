@@ -28,6 +28,7 @@ command -v nvim &>/dev/null 2>&1 && alias vim=nvim
 alias vi=vim
 command -v VBoxManage &>/dev/null 2>&1 && alias vbm=VBoxManage
 alias yg=you-get
+alias s3=mc
 
 
 # vim: set tw=78 ts=2 et sw=2 sr:
