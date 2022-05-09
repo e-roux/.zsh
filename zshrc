@@ -113,6 +113,7 @@ if [ $(uname) = Darwin ]; then
     export CLICOLOR=1
 fi
 
+
 # Environment variables {{{1
 # PATH {{{2
 
@@ -178,7 +179,8 @@ command -v bat &>/dev/null 2>&1 && {
 
 # nnn {{{2
 export NNN_BMS="D:~/Documents;d:~/development;v:~/Movies;m:~/Music;p:~/Pictures;"
-export NNN_OPTS="a"
+export NNN_OPTS="ade"  #
+export NNN_FCOLORS="c1e2272e006033f7c6d6abc4"
 export NNN_PLUG="d:downloader;p:preview-tui;z:autojump"
 # 2}}}
 
@@ -321,4 +323,20 @@ command -v register-python-argcomplete &>/dev/null 2>&1 && {
 # alias -s {txt,py,conf,pl,yml,yaml}=vim
 
 # 1}}}
+
+# Functions {{{1
+function display_certs {
+    # https://unix.stackexchange.com/a/97252
+    awk -v cmd='openssl x509 -noout -subject' '/BEGIN/{close(cmd)};{print | cmd}' < $1
+}
+
+function _display_certs {
+    #compdef display_certs
+    _alternative  'files:filename:_files'
+}
+
+compdef _display_certs display_certs
+
+#  1}}}
+
 # vim: set fdm=marker:

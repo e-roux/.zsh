@@ -22,6 +22,7 @@ command -v fdfinf &>/dev/null 2>&1 && alias fd=fdfind
 alias g=git
 alias gg=googler
 alias help=run-help
+alias n="TERM=xterm-256Color nnn"
 alias p=podman
 alias pc=pre-commit
 command -v nvim &>/dev/null 2>&1 && alias vim=nvim
