@@ -3,10 +3,6 @@
 # TODO: set those in ansible
 # TODO: oc completion broken
 #
-# For docker-compose, see documentation
-# https://docs.docker.com/compose/completion/
-#
-# curl -L https://raw.githubusercontent.com/docker/compose/1.25.4/contrib/completion/zsh/_docker-compose > ~/.zsh/completion/_docker-compose
 
 # General {{{1
 #----------------------------------------
@@ -33,33 +29,33 @@ setopt histignorealldups sharehistory
 # Enable Ctrl-x-e to edit command line
 autoload -U edit-command-line
 zle -N edit-command-line
-bindkey -M vicmd ^e edit-command-line
+bindkey ^e edit-command-line
 
 
 # Cursor {{{2
 # Change cursor shape for different vi modes.
 # https://unix.stackexchange.com/a/496878
 function zle-keymap-select {
-if [[ ${KEYMAP} == vicmd ]] ||
-    [[ $1 = 'block' ]]; then
-    echo -ne '\e[1 q'
+    if [[ ${KEYMAP} == vicmd ]] ||
+        [[ $1 = 'block' ]]; then
+        echo -ne '\e[1 q'
 
-elif [[ ${KEYMAP} == main ]] ||
-    [[ ${KEYMAP} == viins ]] ||
-    [[ ${KEYMAP} = '' ]] ||
-    [[ $1 = 'beam' ]]; then
-    echo -ne '\e[5 q'
-fi
+    elif [[ ${KEYMAP} == main ]] ||
+        [[ ${KEYMAP} == viins ]] ||
+        [[ ${KEYMAP} = '' ]] ||
+        [[ $1 = 'beam' ]]; then
+        echo -ne '\e[5 q'
+    fi
 }
 zle -N zle-keymap-select
 
 # Use beam shape cursor on startup.
 # echo -ne 'Starting zsh'
 
-    # Use beam shape cursor for each new prompt.
-    _fix_cursor() {
-        echo -ne '\e[5 q'
-    }
+# Use beam shape cursor for each new prompt.
+_fix_cursor() {
+    echo -ne '\e[5 q'
+}
 
 precmd_functions+=(_fix_cursor)
 # 2}}}
@@ -107,19 +103,17 @@ if [ -f $ZDOTDIR/zsh_aliases ]; then
 fi
 # 1}}}
 
-# Environment variables
-# BSD specific
-if [ $(uname) = Darwin ]; then
-    export CLICOLOR=1
-fi
-
-
 # Environment variables {{{1
 # PATH {{{2
 
 if [ $(uname) = "Darwin" ]; then
+    # BSD specific
+    export CLICOLOR=1
     export HOMEBREW_NO_ANALYTICS=1
+
     export PATH="/opt/homebrew/sbin:/opt/homebrew/bin:$PATH"
+
+    # https://man7.org/linux/man-pages/man1/hash.1p.html
     hash -r
 fi
 
@@ -265,8 +259,9 @@ zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # Case insensitive match
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
-# zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
+# zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+# zstyle ':completion:*' matcher-list 'm:{[:lower:][:upper:]}={[:upper:][:lower:]}' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 'm:{[:lower:][:upper:]}={[:upper:][:lower:]} l:|=* r:|=*' 
 
 # Group matches and describe.
 zstyle ':completion:*:*:*:*:*' menu select
@@ -319,6 +314,9 @@ command -v helm &>/dev/null 2>&1 && source <(helm completion zsh)
 command -v register-python-argcomplete &>/dev/null 2>&1 && {
     command -v airflow &>/dev/null 2>&1 && eval "$(register-python-argcomplete airflow)"
 }
+
+# command -v psql &>/dev/null 2&>1 && \
+#     compdef _pgsql_psql pgcli
 
 # alias -s {txt,py,conf,pl,yml,yaml}=vim
 
