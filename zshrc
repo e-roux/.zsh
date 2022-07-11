@@ -26,6 +26,10 @@ HELPDIR=/usr/share/zsh/help
 setopt histignorespace
 setopt histignorealldups sharehistory
 
+# IGNOREEOF forces the user to type exit or logout, instead of just pressing ^D.
+# in zsh, set with ignoreeof
+setopt ignoreeof
+
 # Enable Ctrl-x-e to edit command line
 autoload -U edit-command-line
 zle -N edit-command-line
