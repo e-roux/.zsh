@@ -1,13 +1,26 @@
 #!/bin/env zsh
 
+# XDG Base Directory Specification
+# https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html#variables
+
 # XDG configuration home
 [[ -z $XDG_CONFIG_HOME ]] && {
   export XDG_CONFIG_HOME=$HOME/.config
 }
 
+# XDG cache home
+[[ -z $XDG_CACHE_HOME ]] && {
+  export XDG_CACHE_HOME=$HOME/.cache
+}
+
 # XDG data home
 [[ -z $XDG_DATA_HOME ]] && {
   export XDG_DATA_HOME=$HOME/.local/share
+}
+
+# XDG state home
+[[ -z $XDG_STATE_HOME ]] && {
+  export XDG_STATE_HOME=$HOME/.local/state
 }
 
 # zsh {{{1
